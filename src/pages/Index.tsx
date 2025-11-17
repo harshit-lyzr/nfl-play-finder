@@ -10,6 +10,7 @@ interface Message {
   role: 'user' | 'assistant';
   content: string;
   plays?: any[];
+  query?: string;
 }
 
 const Index = () => {
@@ -63,7 +64,7 @@ const Index = () => {
 
       setMessages((prev) => [
         ...prev,
-        { role: 'assistant', content: responseText, plays },
+        { role: 'assistant', content: responseText, plays, query: userMessage },
       ]);
     } catch (error) {
       toast({
@@ -104,7 +105,7 @@ const Index = () => {
               <div key={index}>
                 <ChatMessage role={message.role} content={message.content} />
                 {message.plays && message.plays.length > 0 && (
-                  <PlayTable plays={message.plays} />
+                  <PlayTable plays={message.plays} query={message.query} />
                 )}
               </div>
             ))}
