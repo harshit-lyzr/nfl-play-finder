@@ -38,6 +38,11 @@ All colors MUST be HSL.
 
     --radius: 0.5rem;
 
+    --nfl-blue: 217 91% 25%;
+    --nfl-orange: 16 100% 66%;
+    --nfl-red: 0 84% 60%;
+    --nfl-gray: 215 15% 45%;
+
     --sidebar-background: 0 0% 98%;
 
     --sidebar-foreground: 240 5.3% 26.1%;
