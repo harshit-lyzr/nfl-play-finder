@@ -90,13 +90,50 @@ const Index = () => {
       <div className="flex-1 overflow-y-auto px-6 py-4">
         {messages.length === 0 ? (
           <div className="flex items-center justify-center h-full">
-            <div className="text-center">
+            <div className="text-center max-w-2xl">
               <h2 className="text-xl font-semibold text-foreground mb-2">
                 Welcome to NFL Play Analyzer
               </h2>
-              <p className="text-muted-foreground">
+              <p className="text-muted-foreground mb-6">
                 Ask me about any NFL plays, touchdowns, or player statistics
               </p>
+              <div className="grid gap-3">
+                <Button
+                  variant="outline"
+                  className="text-left justify-start h-auto py-3 px-4"
+                  onClick={() => setInput("Show me all touchdown plays by Tyreek Hill in 2023.")}
+                >
+                  Show me all touchdown plays by Tyreek Hill in 2023.
+                </Button>
+                <Button
+                  variant="outline"
+                  className="text-left justify-start h-auto py-3 px-4"
+                  onClick={() => setInput("Find all plays by Patrick Mahomes where he gained more than 20 yards.")}
+                >
+                  Find all plays by Patrick Mahomes where he gained more than 20 yards.
+                </Button>
+                <Button
+                  variant="outline"
+                  className="text-left justify-start h-auto py-3 px-4"
+                  onClick={() => setInput("List all rushing touchdowns in the 2023 season.")}
+                >
+                  List all rushing touchdowns in the 2023 season.
+                </Button>
+                <Button
+                  variant="outline"
+                  className="text-left justify-start h-auto py-3 px-4"
+                  onClick={() => setInput("Show me all interceptions thrown by quarterbacks in 2023.")}
+                >
+                  Show me all interceptions thrown by quarterbacks in 2023.
+                </Button>
+                <Button
+                  variant="outline"
+                  className="text-left justify-start h-auto py-3 px-4"
+                  onClick={() => setInput("Find all defensive plays recorded by Micah Parsons or T.J. Watt.")}
+                >
+                  Find all defensive plays recorded by Micah Parsons or T.J. Watt.
+                </Button>
+              </div>
             </div>
           </div>
         ) : (
