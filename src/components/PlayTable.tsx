@@ -40,20 +40,20 @@ export const PlayTable = ({ plays, query }: PlayTableProps) => {
   };
 
   return (
-    <div className="mt-4 rounded-lg overflow-hidden bg-card border border-border">
+    <div className="mt-6 rounded-2xl overflow-hidden bg-card border border-border/50 shadow-lg animate-slide-up">
       {/* Header */}
-      <div className="bg-nfl-blue text-white p-4">
-        <h3 className="font-semibold text-base">
+      <div className="bg-gradient-to-r from-primary via-primary/95 to-primary/90 text-white p-5">
+        <h3 className="font-bold text-lg">
           {query || 'Search Results'}
         </h3>
-        <p className="text-sm text-white/80 mt-1">
+        <p className="text-sm text-white/90 mt-1">
           {plays.length} play{plays.length !== 1 ? 's' : ''} found. Click on a play to view details and NGS media links.
         </p>
       </div>
 
       {/* Table Header */}
-      <div className="bg-nfl-blue text-white border-t border-white/20">
-        <div className="grid grid-cols-12 gap-4 px-4 py-3 text-sm font-medium">
+      <div className="bg-gradient-to-r from-primary/10 to-accent/5 border-t border-border/30">
+        <div className="grid grid-cols-12 gap-4 px-5 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
           <div className="col-span-1">Play</div>
           <div className="col-span-4">Description</div>
           <div className="col-span-1">Week</div>
@@ -66,13 +66,13 @@ export const PlayTable = ({ plays, query }: PlayTableProps) => {
       </div>
 
       {/* Plays List */}
-      <div className="divide-y divide-border">
+      <div className="divide-y divide-border/50">
         {plays.map((play, index) => (
-          <div key={play.play_id} className="bg-background hover:bg-muted/50 transition-colors">
-            <div className="grid grid-cols-12 gap-4 px-4 py-4 items-start">
+          <div key={play.play_id} className="bg-background hover:bg-gradient-to-r hover:from-primary/5 hover:to-transparent transition-all duration-300 group">
+            <div className="grid grid-cols-12 gap-4 px-5 py-4 items-start">
               {/* Play Number */}
               <div className="col-span-1 flex items-start pt-1">
-                <div className="w-8 h-8 rounded-full border-2 border-primary/30 bg-background flex items-center justify-center text-sm font-medium text-foreground">
+                <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 border border-primary/30 flex items-center justify-center text-sm font-bold text-primary shadow-sm group-hover:scale-110 transition-transform duration-300">
                   {index + 1}
                 </div>
               </div>
@@ -84,23 +84,23 @@ export const PlayTable = ({ plays, query }: PlayTableProps) => {
                     ({play.formation}) {play.player_name} {play.play_description}
                   </p>
                   {play.touchdown === 1 && (
-                    <Badge variant="secondary" className="text-xs bg-green-600 text-white border-0">
-                      TOUCHDOWN
+                    <Badge variant="secondary" className="text-xs font-semibold bg-gradient-to-r from-green-600 to-green-500 text-white border-0 shadow-sm">
+                      🏈 TOUCHDOWN
                     </Badge>
                   )}
                 </div>
                 {expandedPlay === play.play_id && (
-                  <div className="mt-3 space-y-2 text-xs text-muted-foreground">
-                    <p>Game Date: {play.game_date} | Play ID: {play.play_id}</p>
-                    <p>Formation: {play.formation} | Alignment: {play.alignment}</p>
-                    <p>Position: {play.position} | Play Type: {play.play_type}</p>
+                  <div className="mt-3 p-3 rounded-lg bg-muted/50 space-y-2 text-xs text-muted-foreground border border-border/50 animate-fade-in">
+                    <p><span className="font-semibold">Game Date:</span> {play.game_date} | <span className="font-semibold">Play ID:</span> {play.play_id}</p>
+                    <p><span className="font-semibold">Formation:</span> {play.formation} | <span className="font-semibold">Alignment:</span> {play.alignment}</p>
+                    <p><span className="font-semibold">Position:</span> {play.position} | <span className="font-semibold">Play Type:</span> {play.play_type}</p>
                   </div>
                 )}
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={() => toggleExpand(play.play_id)}
-                  className="mt-2 h-6 text-xs text-muted-foreground hover:text-foreground p-0"
+                  className="mt-2 h-7 text-xs text-primary hover:text-primary hover:bg-primary/10 px-2 transition-all duration-300"
                 >
                   {expandedPlay === play.play_id ? (
                     <>
@@ -118,35 +118,35 @@ export const PlayTable = ({ plays, query }: PlayTableProps) => {
 
               {/* Week */}
               <div className="col-span-1">
-                <Badge variant="secondary" className="text-xs bg-nfl-gray text-white border-0">
+                <Badge variant="secondary" className="text-xs font-medium bg-gradient-to-r from-slate-600 to-slate-500 text-white border-0 shadow-sm">
                   WK {play.week}
                 </Badge>
               </div>
 
               {/* Season */}
               <div className="col-span-1">
-                <Badge variant="secondary" className="text-xs bg-nfl-gray text-white border-0">
+                <Badge variant="secondary" className="text-xs font-medium bg-gradient-to-r from-slate-600 to-slate-500 text-white border-0 shadow-sm">
                   {play.season}
                 </Badge>
               </div>
 
               {/* Yards */}
               <div className="col-span-1">
-                <Badge variant="secondary" className="text-xs bg-nfl-gray text-white border-0">
+                <Badge variant="secondary" className="text-xs font-medium bg-gradient-to-r from-slate-600 to-slate-500 text-white border-0 shadow-sm">
                   {play.yards} YD
                 </Badge>
               </div>
 
               {/* Away Team */}
               <div className="col-span-1">
-                <Badge variant="secondary" className="text-xs bg-nfl-orange text-white border-0">
+                <Badge variant="secondary" className="text-xs font-bold bg-gradient-to-r from-orange-600 to-orange-500 text-white border-0 shadow-sm">
                   {play.opponent}
                 </Badge>
               </div>
 
               {/* Home Team */}
               <div className="col-span-1">
-                <Badge variant="secondary" className="text-xs bg-nfl-red text-white border-0">
+                <Badge variant="secondary" className="text-xs font-bold bg-gradient-to-r from-red-600 to-red-500 text-white border-0 shadow-sm">
                   {play.team}
                 </Badge>
               </div>
@@ -158,13 +158,13 @@ export const PlayTable = ({ plays, query }: PlayTableProps) => {
                     href={play.media_link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-nfl-blue text-white text-xs font-medium hover:bg-nfl-blue/80 transition-colors"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-primary to-primary/90 text-white text-xs font-semibold hover:shadow-lg hover:scale-105 transition-all duration-300 shadow-md"
                   >
-                    <ExternalLink className="h-3 w-3" />
+                    <ExternalLink className="h-3.5 w-3.5" />
                     Watch Video
                   </a>
                 ) : (
-                  <Badge variant="secondary" className="text-xs bg-muted text-muted-foreground border-0">
+                  <Badge variant="secondary" className="text-xs bg-muted text-muted-foreground border border-border/50">
                     No Media
                   </Badge>
                 )}
