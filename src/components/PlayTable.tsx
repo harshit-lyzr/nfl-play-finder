@@ -40,7 +40,7 @@ export const PlayTable = ({ plays, query }: PlayTableProps) => {
   };
 
   return (
-    <div className="w-full max-w-[70%] mx-auto mt-6 rounded-2xl overflow-hidden bg-card border border-border/50 shadow-lg animate-slide-up">
+    <div className="w-full max-w-[70%] mt-6 rounded-2xl overflow-hidden bg-card border border-border/50 shadow-lg animate-slide-up">
       {/* Header */}
       <div className="bg-gradient-to-r from-primary via-primary/95 to-primary/90 text-white p-5">
         <h3 className="font-bold text-lg">
