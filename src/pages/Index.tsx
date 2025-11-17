@@ -116,46 +116,46 @@ const Index = () => {
                 <Button
                   variant="outline"
                   className="text-left justify-start h-auto py-4 px-5 border-border/50 hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 group"
-                  onClick={() => setInput("Show me all touchdown plays by Tyreek Hill in 2023.")}
+                  onClick={() => setInput("Show me all touchdown plays by Tyreek Hill in the 2023 season.")}
                 >
                   <span className="text-sm group-hover:text-primary transition-colors">
-                    Show me all touchdown plays by Tyreek Hill in 2023.
+                    Show me all touchdown plays by Tyreek Hill in the 2023 season.
                   </span>
                 </Button>
                 <Button
                   variant="outline"
                   className="text-left justify-start h-auto py-4 px-5 border-border/50 hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 group"
-                  onClick={() => setInput("Find all plays by Patrick Mahomes where he gained more than 20 yards.")}
+                  onClick={() => setInput("Find all players who scored a touchdown of more than 70 yards.")}
                 >
                   <span className="text-sm group-hover:text-primary transition-colors">
-                    Find all plays by Patrick Mahomes where he gained more than 20 yards.
+                    Find all players who scored a touchdown of more than 70 yards.
                   </span>
                 </Button>
                 <Button
                   variant="outline"
                   className="text-left justify-start h-auto py-4 px-5 border-border/50 hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 group"
-                  onClick={() => setInput("List all rushing touchdowns in the 2023 season.")}
+                  onClick={() => setInput("List all plays where Justin Fields is involved, including touchdowns and interceptions.")}
                 >
                   <span className="text-sm group-hover:text-primary transition-colors">
-                    List all rushing touchdowns in the 2023 season.
+                    List all plays where Justin Fields is involved, including touchdowns and interceptions.
                   </span>
                 </Button>
                 <Button
                   variant="outline"
                   className="text-left justify-start h-auto py-4 px-5 border-border/50 hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 group"
-                  onClick={() => setInput("Show me all interceptions thrown by quarterbacks in 2023.")}
+                  onClick={() => setInput("Show me all rushing touchdowns in 2023.")}
                 >
                   <span className="text-sm group-hover:text-primary transition-colors">
-                    Show me all interceptions thrown by quarterbacks in 2023.
+                    Show me all rushing touchdowns in 2023.
                   </span>
                 </Button>
                 <Button
                   variant="outline"
                   className="text-left justify-start h-auto py-4 px-5 border-border/50 hover:border-primary/50 hover:bg-primary/5 transition-all duration-300 group"
-                  onClick={() => setInput("Find all defensive plays recorded by Micah Parsons or T.J. Watt.")}
+                  onClick={() => setInput("Find all defensive plays where the defender gained more than 40 yards.")}
                 >
                   <span className="text-sm group-hover:text-primary transition-colors">
-                    Find all defensive plays recorded by Micah Parsons or T.J. Watt.
+                    Find all defensive plays where the defender gained more than 40 yards.
                   </span>
                 </Button>
               </div>
