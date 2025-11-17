@@ -91,6 +91,11 @@ All colors MUST be HSL.
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+    
+    --nfl-blue: 217 91% 25%;
+    --nfl-orange: 16 100% 66%;
+    --nfl-red: 0 84% 60%;
+    --nfl-gray: 215 15% 45%;
   }
 }
 
