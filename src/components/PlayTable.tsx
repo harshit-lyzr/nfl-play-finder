@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronDown, ChevronUp, ExternalLink } from 'lucide-react';
 
 interface Play {
   play_id: number;
@@ -55,14 +55,13 @@ export const PlayTable = ({ plays, query }: PlayTableProps) => {
       <div className="bg-nfl-blue text-white border-t border-white/20">
         <div className="grid grid-cols-12 gap-4 px-4 py-3 text-sm font-medium">
           <div className="col-span-1">Play</div>
-          <div className="col-span-3">Description</div>
-          <div className="col-span-1">Down</div>
-          <div className="col-span-1">Quarter</div>
+          <div className="col-span-4">Description</div>
           <div className="col-span-1">Week</div>
           <div className="col-span-1">Season</div>
+          <div className="col-span-1">Yards</div>
           <div className="col-span-1">Away</div>
           <div className="col-span-1">Home</div>
-          <div className="col-span-2">Media Link</div>
+          <div className="col-span-2">Media</div>
         </div>
       </div>
 
@@ -79,63 +78,42 @@ export const PlayTable = ({ plays, query }: PlayTableProps) => {
               </div>
 
               {/* Description */}
-              <div className="col-span-3">
-                <p className="text-sm text-foreground leading-relaxed">
-                  {play.play_description}
-                </p>
+              <div className="col-span-4">
+                <div className="space-y-1">
+                  <p className="text-sm text-foreground leading-relaxed">
+                    ({play.formation}) {play.player_name} {play.play_description}
+                  </p>
+                  {play.touchdown === 1 && (
+                    <Badge variant="secondary" className="text-xs bg-green-600 text-white border-0">
+                      TOUCHDOWN
+                    </Badge>
+                  )}
+                </div>
                 {expandedPlay === play.play_id && (
-                  <div className="mt-3 space-y-2">
-                    <p className="text-xs text-muted-foreground">
-                      Game ID: {play.game_date} | Play ID: {play.play_id}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      <Badge variant="outline" className="text-xs bg-nfl-gray/20 border-nfl-gray/30">
-                        NGS: Truck
-                      </Badge>
-                      <Badge variant="outline" className="text-xs bg-nfl-gray/20 border-nfl-gray/30">
-                        NGS: Sideline
-                      </Badge>
-                      <Badge variant="outline" className="text-xs bg-nfl-gray/20 border-nfl-gray/30">
-                        NGS: Endzone
-                      </Badge>
-                      <Badge variant="outline" className="text-xs bg-nfl-gray/20 border-nfl-gray/30">
-                        NGS: Endzone2
-                      </Badge>
-                    </div>
+                  <div className="mt-3 space-y-2 text-xs text-muted-foreground">
+                    <p>Game Date: {play.game_date} | Play ID: {play.play_id}</p>
+                    <p>Formation: {play.formation} | Alignment: {play.alignment}</p>
+                    <p>Position: {play.position} | Play Type: {play.play_type}</p>
                   </div>
                 )}
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={() => toggleExpand(play.play_id)}
-                  className="mt-2 h-6 text-xs text-muted-foreground hover:text-foreground"
+                  className="mt-2 h-6 text-xs text-muted-foreground hover:text-foreground p-0"
                 >
                   {expandedPlay === play.play_id ? (
                     <>
                       <ChevronUp className="h-3 w-3 mr-1" />
-                      Less
+                      Less details
                     </>
                   ) : (
                     <>
                       <ChevronDown className="h-3 w-3 mr-1" />
-                      More
+                      More details
                     </>
                   )}
                 </Button>
-              </div>
-
-              {/* Down */}
-              <div className="col-span-1">
-                <Badge variant="secondary" className="text-xs bg-nfl-gray text-white border-0">
-                  1st
-                </Badge>
-              </div>
-
-              {/* Quarter */}
-              <div className="col-span-1">
-                <Badge variant="secondary" className="text-xs bg-nfl-gray text-white border-0">
-                  Q2
-                </Badge>
               </div>
 
               {/* Week */}
@@ -149,6 +127,13 @@ export const PlayTable = ({ plays, query }: PlayTableProps) => {
               <div className="col-span-1">
                 <Badge variant="secondary" className="text-xs bg-nfl-gray text-white border-0">
                   {play.season}
+                </Badge>
+              </div>
+
+              {/* Yards */}
+              <div className="col-span-1">
+                <Badge variant="secondary" className="text-xs bg-nfl-gray text-white border-0">
+                  {play.yards} YD
                 </Badge>
               </div>
 
@@ -173,10 +158,10 @@ export const PlayTable = ({ plays, query }: PlayTableProps) => {
                     href={play.media_link}
                     target="_blank"
                     rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-nfl-blue text-white text-xs font-medium hover:bg-nfl-blue/80 transition-colors"
                   >
-                    <Badge variant="secondary" className="text-xs bg-nfl-gray text-white border-0 cursor-pointer hover:bg-nfl-gray/80">
-                      Media Portal
-                    </Badge>
+                    <ExternalLink className="h-3 w-3" />
+                    Watch Video
                   </a>
                 ) : (
                   <Badge variant="secondary" className="text-xs bg-muted text-muted-foreground border-0">
