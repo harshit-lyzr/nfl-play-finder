@@ -1,73 +1,60 @@
-# Welcome to your Lovable project
+# NFL Play Finder
 
-## Project info
+Interactive assistant for exploring detailed NFL play data. Ask for touchdowns, rushing plays, defensive highlights, or your own custom queries—the chat interface calls the configured agent endpoint and renders structured play tables alongside narrative answers.
 
-**URL**: https://lovable.dev/projects/881f28dc-7f3b-4387-a471-2f26d8ac0007
+## Table of Contents
+- Overview
+- Tech Stack
+- Project Structure
+- Getting Started
+- Environment Variables
+- Available Scripts
+- Usage Tips
 
-## How can I edit this code?
+## Overview
+- Chat-driven flow powered by `Index.tsx`, which sends user prompts to an external inference agent.
+- Responses can include human-readable thoughts plus a list of play objects rendered in `PlayTable`.
+- Skeleton loaders, toasts, and button/input primitives come from shadcn-ui for a polished UX.
 
-There are several ways of editing your application.
+## Tech Stack
+- Vite + React + TypeScript
+- Tailwind CSS + shadcn-ui component primitives
+- lucide-react icons
 
-**Use Lovable**
+## Project Structure
+- `src/pages/Index.tsx` main chat experience and API orchestration
+- `src/components/PlayTable.tsx` tabular rendering of play results
+- `src/components/ChatMessage.tsx` role-aware message bubbles
+- `src/components/ThoughtLoader.tsx` animated loader while awaiting responses
+- `src/components/ui/*` shadcn-ui building blocks
+- `src/hooks/use-toast.ts` toast helpers
+- `env.example` documented configuration variables
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/881f28dc-7f3b-4387-a471-2f26d8ac0007) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
+## Getting Started
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+git clone <repo>
+cd nfl-play-finder
+npm install
+cp env.example .env        # fill in real values
+npm run dev                # http://localhost:5173 by default
 ```
 
-**Edit a file directly in GitHub**
+## Environment Variables
+Copy `env.example` to `.env` and set:
+- `VITE_AGENT_API_URL` full inference endpoint
+- `VITE_AGENT_API_KEY` API key for the agent
+- `VITE_AGENT_USER_ID` identifier passed as `user_id`
+- `VITE_AGENT_ID` agent identifier
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+The app generates a unique session identifier per browser session, so no session env var is required.
 
-**Use GitHub Codespaces**
+## Available Scripts
+- `npm run dev` start the Vite dev server with HMR
+- `npm run build` production build
+- `npm run preview` preview the production build locally
+- `npm run lint` run lint checks (if configured in `package.json`)
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/881f28dc-7f3b-4387-a471-2f26d8ac0007) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## Usage Tips
+- Use the preset prompt buttons on an empty conversation to quickly explore examples.
+- Messages that return structured play data render an interactive table under the assistant response.
+- Configuration issues (missing env vars, network errors) raise shadcn toasts for quick diagnosis.

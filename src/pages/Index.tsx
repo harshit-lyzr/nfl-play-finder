@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -14,14 +15,33 @@ interface Message {
   query?: string;
 }
 
+const API_KEY = import.meta.env.VITE_AGENT_API_KEY;
+const USER_ID = import.meta.env.VITE_AGENT_USER_ID;
+const AGENT_ID = import.meta.env.VITE_AGENT_ID;
+const createSessionId = () => {
+  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+    return crypto.randomUUID();
+  }
+  return Math.random().toString(36).slice(2);
+};
+
 const Index = () => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [sessionId] = useState(createSessionId);
   const { toast } = useToast();
 
   const handleSend = async () => {
     if (!input.trim() || isLoading) return;
+    if ( !API_KEY || !USER_ID || !AGENT_ID) {
+      toast({
+        title: 'Configuration error',
+        description: 'Missing API environment variables',
+        variant: 'destructive',
+      });
+      return;
+    }
 
     const userMessage = input.trim();
     setInput('');
@@ -33,12 +53,12 @@ const Index = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-api-key': 'sk-default-PnO8PLVxE8ukLHaAVFQPbnlUYmkkEfXs',
+          'x-api-key': API_KEY,
         },
         body: JSON.stringify({
-          user_id: 'harshit@lyzr.ai',
-          agent_id: '691ad20566a08f7a747550d1',
-          session_id: '691ad20566a08f7a747550d1-6cyi1aqprvb',
+          user_id: USER_ID,
+          agent_id: AGENT_ID,
+          session_id: sessionId,
           message: userMessage,
         }),
       });
