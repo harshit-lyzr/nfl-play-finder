@@ -93,7 +93,7 @@ Get started instantly with pre-configured queries:
    **Step 2: Find the NFL Play Finder Blueprint**
    - Navigate to the Blueprints section
    - Search for "NFL Play Finder"
-   - Or use direct link with Blueprint ID: `9e88a220-5f66-4482-9e2f-ac27bd061869`
+   - Or use direct link with Blueprint ID: `9d1bf62b-9668-42c8-8b47-8810ecbf0d6b`
 
    **Step 3: Clone the Blueprint**
    - Click on the "NFL Play Finder" blueprint
@@ -149,7 +149,7 @@ Create a `.env` file in the root directory with the following variables. See `en
 
 - `VITE_AGENT_ID`: The Manager Agent ID from your cloned blueprint
   - **How to get it**:
-    1. Clone the "NFL Play Finder" blueprint in Lyzr Studio (Blueprint ID: `9e88a220-5f66-4482-9e2f-ac27bd061869`)
+    1. Clone the "NFL Play Finder" blueprint in Lyzr Studio (Blueprint ID: `9d1bf62b-9668-42c8-8b47-8810ecbf0d6b`)
     2. Open your cloned blueprint
     3. Copy the Manager Agent ID
   - This is the agent configured to understand NFL play data and query the database
