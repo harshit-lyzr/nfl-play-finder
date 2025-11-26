@@ -66,7 +66,8 @@ Get started instantly with pre-configured queries:
 ### Prerequisites
 
 - Node.js 18+ and npm (recommended: use [nvm](https://github.com/nvm-sh/nvm#installing-and-updating))
-- Lyzr API credentials (API key, User ID, and Agent ID)
+- Lyzr Studio account ([Sign up for free](https://studio.lyzr.ai))
+- Lyzr API Key (get from your Lyzr Studio dashboard)
 
 ### Installation
 
@@ -81,21 +82,52 @@ Get started instantly with pre-configured queries:
    npm install
    ```
 
-3. **Set up environment variables**
+3. **Clone the NFL Play Finder Blueprint**
+
+   The application requires a specialized AI agent configured to understand NFL play data. Follow these steps to clone the blueprint:
+
+   **Step 1: Access Lyzr Studio**
+   - Go to [Lyzr Studio](https://studio.lyzr.ai)
+   - Sign in or create a free account
+
+   **Step 2: Find the NFL Play Finder Blueprint**
+   - Navigate to the Blueprints section
+   - Search for "NFL Play Finder"
+   - Or use direct link with Blueprint ID: `9d1bf62b-9668-42c8-8b47-8810ecbf0d6b`
+
+   **Step 3: Clone the Blueprint**
+   - Click on the "NFL Play Finder" blueprint
+   - Click the "Clone" or "Use Blueprint" button
+   - This creates your own instance of the agents in your workspace
+
+   **Step 4: Get Your Agent ID**
+   - After cloning, you'll be redirected to your blueprint instance
+   - Open the blueprint details
+   - Copy the **Manager Agent ID** (this is what you'll use as `VITE_AGENT_ID`)
+
+4. **Set up environment variables**
 
    Copy the example environment file:
    ```bash
    cp env.example .env
    ```
 
-   Edit `.env` and add your Lyzr API credentials. See [Environment Variables](#environment-variables) section for details.
+   Edit `.env` and add your credentials:
+   ```bash
+   VITE_AGENT_API_URL=https://agent-prod.studio.lyzr.ai/v3/inference/chat/
+   VITE_AGENT_API_KEY=your_lyzr_api_key_here         # From Lyzr Studio dashboard
+   VITE_AGENT_USER_ID=your_email@example.com          # Your Lyzr account email
+   VITE_AGENT_ID=your_manager_agent_id                 # From cloned blueprint (Step 4 above)
+   ```
 
-4. **Run the development server**
+   See [Environment Variables](#environment-variables) section for more details.
+
+5. **Run the development server**
    ```bash
    npm run dev
    ```
 
-5. **Open your browser**
+6. **Open your browser**
 
    Navigate to [http://localhost:8080](http://localhost:8080) (or the port shown in your terminal)
 
@@ -106,16 +138,37 @@ Create a `.env` file in the root directory with the following variables. See `en
 ### Required Variables
 
 - `VITE_AGENT_API_URL`: The full Lyzr Agent API endpoint URL
-  - Example: `https://agent-prod.studio.lyzr.ai/v3/inference/chat/`
+  - Default: `https://agent-prod.studio.lyzr.ai/v3/inference/chat/`
+  - You typically don't need to change this
 
 - `VITE_AGENT_API_KEY`: Your Lyzr API authentication key
-  - Get this from your Lyzr dashboard
+  - **How to get it**: Go to [Lyzr Studio Dashboard](https://studio.lyzr.ai) → Settings → API Keys → Create/Copy key
 
-- `VITE_AGENT_USER_ID`: User identifier for Lyzr API calls
-  - Unique identifier for your application user
+- `VITE_AGENT_USER_ID`: Your Lyzr account email
+  - Use the email address associated with your Lyzr Studio account
 
-- `VITE_AGENT_ID`: The specific Lyzr agent ID for NFL play queries
-  - This agent is configured to understand NFL play data
+- `VITE_AGENT_ID`: The Manager Agent ID from your cloned blueprint
+  - **How to get it**:
+    1. Clone the "NFL Play Finder" blueprint in Lyzr Studio (Blueprint ID: `9d1bf62b-9668-42c8-8b47-8810ecbf0d6b`)
+    2. Open your cloned blueprint
+    3. Copy the Manager Agent ID
+  - This is the agent configured to understand NFL play data and query the database
+
+### About the Blueprint
+
+The NFL Play Finder uses a multi-agent architecture managed through Lyzr Studio:
+
+**Manager Agent (NFL Query Coordinator)**
+- Understands user queries about NFL plays
+- Coordinates with the data specialist
+- Presents results in a structured format
+
+**Worker Agent (NFL Data Specialist)**
+- Queries the NFL play database
+- Returns structured play data
+- Provides narrative context
+
+When you clone the blueprint, you get your own instances of these agents that you can customize and manage through Lyzr Studio.
 
 **Note**: The application automatically generates a unique session ID per browser session, so no session environment variable is required.
 
