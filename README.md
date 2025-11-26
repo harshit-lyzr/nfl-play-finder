@@ -82,28 +82,28 @@ Get started instantly with pre-configured queries:
    npm install
    ```
 
-3. **Clone the NFL Play Finder Blueprint**
+3. **Create the NFL Play Finder Agent**
 
-   The application requires a specialized AI agent configured to understand NFL play data. Follow these steps to clone the blueprint:
+   The application requires a Lyzr agent configured to query NFL play data. Follow these steps:
 
    **Step 1: Access Lyzr Studio**
    - Go to [Lyzr Studio](https://studio.lyzr.ai)
    - Sign in or create a free account
 
-   **Step 2: Find the NFL Play Finder Blueprint**
-   - Navigate to the Blueprints section
-   - Search for "NFL Play Finder"
-   - Or use direct link with Blueprint ID: `9d1bf62b-9668-42c8-8b47-8810ecbf0d6b`
+   **Step 2: Create a New Agent**
+   - Click "Create Agent" or navigate to the Agents section
+   - Name your agent (e.g., "NFL Play Finder")
 
-   **Step 3: Clone the Blueprint**
-   - Click on the "NFL Play Finder" blueprint
-   - Click the "Clone" or "Use Blueprint" button
-   - This creates your own instance of the agents in your workspace
+   **Step 3: Configure the Agent**
+   - Add the NFL play data as a knowledge source using this public CSV URL:
+     ```
+     https://raw.githubusercontent.com/harshit-lyzr/nfl-play-finder/lyzr/public/nfl_plays_data.csv
+     ```
+   - Set the agent's system prompt (see [Agent Configuration](#agent-configuration) below)
 
    **Step 4: Get Your Agent ID**
-   - After cloning, you'll be redirected to your blueprint instance
-   - Open the blueprint details
-   - Copy the **Manager Agent ID** (this is what you'll use as `VITE_AGENT_ID`)
+   - After creating the agent, copy the **Agent ID** from the agent details
+   - This is what you'll use as `VITE_AGENT_ID`
 
 4. **Set up environment variables**
 
@@ -117,7 +117,7 @@ Get started instantly with pre-configured queries:
    VITE_AGENT_API_URL=https://agent-prod.studio.lyzr.ai/v3/inference/chat/
    VITE_AGENT_API_KEY=your_lyzr_api_key_here         # From Lyzr Studio dashboard
    VITE_AGENT_USER_ID=your_email@example.com          # Your Lyzr account email
-   VITE_AGENT_ID=your_manager_agent_id                 # From cloned blueprint (Step 4 above)
+   VITE_AGENT_ID=your_agent_id                        # From Step 4 above
    ```
 
    See [Environment Variables](#environment-variables) section for more details.
@@ -147,28 +147,58 @@ Create a `.env` file in the root directory with the following variables. See `en
 - `VITE_AGENT_USER_ID`: Your Lyzr account email
   - Use the email address associated with your Lyzr Studio account
 
-- `VITE_AGENT_ID`: The Manager Agent ID from your cloned blueprint
-  - **How to get it**:
-    1. Clone the "NFL Play Finder" blueprint in Lyzr Studio (Blueprint ID: `9d1bf62b-9668-42c8-8b47-8810ecbf0d6b`)
-    2. Open your cloned blueprint
-    3. Copy the Manager Agent ID
-  - This is the agent configured to understand NFL play data and query the database
+- `VITE_AGENT_ID`: Your Lyzr Agent ID
+  - **How to get it**: Create an agent in Lyzr Studio and copy the Agent ID from the agent details page
 
-### About the Blueprint
+### Agent Configuration
 
-The NFL Play Finder uses a multi-agent architecture managed through Lyzr Studio:
+To configure your agent for the NFL Play Finder demo, use the following setup:
 
-**Manager Agent (NFL Query Coordinator)**
-- Understands user queries about NFL plays
-- Coordinates with the data specialist
-- Presents results in a structured format
+**Knowledge Source (CSV Data)**
+Add this public CSV URL as a knowledge source in your agent:
+```
+https://raw.githubusercontent.com/harshit-lyzr/nfl-play-finder/lyzr/public/nfl_plays_data.csv
+```
 
-**Worker Agent (NFL Data Specialist)**
-- Queries the NFL play database
-- Returns structured play data
-- Provides narrative context
+**Agent System Prompt**
+Use this system prompt for your agent:
 
-When you clone the blueprint, you get your own instances of these agents that you can customize and manage through Lyzr Studio.
+```
+You are an NFL Play Data Assistant. You help users find and analyze NFL play data from the 2023 season.
+
+When a user asks about NFL plays, search the knowledge base and return results in this EXACT JSON format:
+
+{
+  "results": [
+    {
+      "play_id": <number>,
+      "season": <number>,
+      "week": <number>,
+      "game_date": "<string>",
+      "team": "<string>",
+      "opponent": "<string>",
+      "player_name": "<string>",
+      "position": "<string>",
+      "play_type": "<string>",
+      "yards": <number>,
+      "touchdown": <0 or 1>,
+      "interception": <0 or 1>,
+      "formation": "<string>",
+      "alignment": "<string>",
+      "play_description": "<string>",
+      "media_link": "<string>"
+    }
+  ],
+  "thought": "<Your narrative explanation of the results>"
+}
+
+Guidelines:
+- Always return valid JSON with "results" array and "thought" string
+- Filter plays based on the user's query (player name, team, play type, yards, touchdowns, etc.)
+- The "thought" field should explain what you found in a conversational way
+- If no matching plays are found, return empty results array with an explanation in "thought"
+- Include all matching plays from the data
+```
 
 **Note**: The application automatically generates a unique session ID per browser session, so no session environment variable is required.
 
@@ -191,7 +221,8 @@ nfl-play-finder/
 │   │   └── utils.ts           # Utility functions
 │   ├── main.tsx               # Application entry point
 │   └── index.css              # Global styles and Tailwind config
-├── public/                    # Static assets
+├── public/
+│   └── nfl_plays_data.csv     # Sample NFL play data (50 plays from 2023 season)
 ├── env.example                # Environment variables template
 ├── vite.config.ts             # Vite configuration
 ├── tailwind.config.ts         # Tailwind CSS customization
