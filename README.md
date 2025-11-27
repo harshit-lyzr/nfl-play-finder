@@ -117,8 +117,12 @@ Get started instantly with pre-configured queries:
    VITE_AGENT_API_URL=https://agent-prod.studio.lyzr.ai/v3/inference/chat/
    VITE_AGENT_API_KEY=your_lyzr_api_key_here         # From Lyzr Studio dashboard
    VITE_AGENT_USER_ID=your_email@example.com          # Your Lyzr account email
-   VITE_AGENT_ID=your_agent_id                        # From Step 4 above
+   VITE_AGENT_ID=6927b373cebc7452a28fa9fd            # Pre-configured NFL Play Finder agent
    ```
+
+   > **Note**: The pre-configured agent (`6927b373cebc7452a28fa9fd`) comes with sample NFL play data already ingested. To use your own data, see [Using Your Own Data](#using-your-own-data) below.
+   >
+   > **Blueprint**: View and clone this agent from [Lyzr Studio Blueprint](https://studio.lyzr.ai/blueprints/57761163-a159-4fbd-94bc-6c22017096a2)
 
    See [Environment Variables](#environment-variables) section for more details.
 
@@ -148,7 +152,9 @@ Create a `.env` file in the root directory with the following variables. See `en
   - Use the email address associated with your Lyzr Studio account
 
 - `VITE_AGENT_ID`: Your Lyzr Agent ID
-  - **How to get it**: Create an agent in Lyzr Studio and copy the Agent ID from the agent details page
+  - **Pre-configured Agent**: `6927b373cebc7452a28fa9fd` (NFL Play Finder with sample data)
+  - **Custom Agent**: Create your own agent in Lyzr Studio and copy the Agent ID
+  - **Blueprint**: [NFL Play Finder Blueprint](https://studio.lyzr.ai/blueprints/57761163-a159-4fbd-94bc-6c22017096a2)
 
 ### Agent Configuration
 
@@ -201,6 +207,44 @@ Guidelines:
 ```
 
 **Note**: The application automatically generates a unique session ID per browser session, so no session environment variable is required.
+
+### Using Your Own Data
+
+Want to use your own NFL play data or customize the dataset? Follow these steps:
+
+1. **Prepare Your CSV Data**
+
+   Ensure your CSV file has these columns (or modify the agent prompt accordingly):
+   ```
+   play_id,season,week,game_date,team,opponent,player_name,position,play_type,yards,touchdown,interception,formation,alignment,play_description,media_link
+   ```
+
+2. **Create a Knowledge Base in Lyzr Studio**
+   - Go to [Lyzr Studio](https://studio.lyzr.ai) → Knowledge Bases
+   - Click "Create Knowledge Base"
+   - Name it (e.g., "NFL Play Data 2024")
+
+3. **Ingest Your CSV File**
+   - Upload your CSV file to the knowledge base
+   - Wait for ingestion to complete (usually takes 1-2 minutes)
+
+4. **Create a New Agent with Your Knowledge Base**
+   - Go to Agents → Create Agent
+   - Select your knowledge base as the data source
+   - Use the [Agent System Prompt](#agent-configuration) from above
+   - Copy the new Agent ID
+
+5. **Update Your `.env` File**
+   ```bash
+   VITE_AGENT_ID=your_new_agent_id_here
+   ```
+
+6. **Restart the Development Server**
+   ```bash
+   npm run dev
+   ```
+
+Your application will now query your custom NFL play data!
 
 ## Project Structure
 
